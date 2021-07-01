@@ -1,26 +1,18 @@
-import { useState } from "react";
-import Header from "./components/Layout/Header";
-import Meals from "./components/Meals/Meals";
-import Cart from "./components/Cart/Cart";
-import CartProvider from "./store/CartProvider";
-
+import { useState, useCallback } from "react";
+import Hello from "./Hello";
 function App() {
-  const [cartIsShown, setCartIsShown] = useState(false);
-
-  const showCartHandler = () => {
-    setCartIsShown(true);
-  };
-  const hideCartHandler = () => {
-    setCartIsShown(false);
-  };
+  const [count, setCount] = useState(0);
+  const increment = useCallback(
+    (n) => {
+      setCount((c) => c + n);
+    },
+    [setCount]
+  );
   return (
-    <CartProvider>
-      {cartIsShown && <Cart onClose={hideCartHandler} />}
-      <Header onShowCart={showCartHandler} />
-      <main>
-        <Meals />
-      </main>
-    </CartProvider>
+    <div>
+      <Hello increment={increment} />
+      <div>{count}</div>
+    </div>
   );
 }
 
